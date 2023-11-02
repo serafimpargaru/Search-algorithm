@@ -172,7 +172,6 @@ const jobs = [
 
 const searchJob = function (jobPosition, geoPlace) {
   const array = [];
-  //resultsList.innerHTML = "";
   console.log(jobPosition + geoPlace)
   for (let i = 0; i < jobs.length; i++) {
     if (
@@ -180,7 +179,6 @@ const searchJob = function (jobPosition, geoPlace) {
       jobs[i].location.toLowerCase().includes(geoPlace.toLowerCase())
     ) {
       array.push(jobs[i]);
-      //resultsList.innerHTML += `<li> ${jobs[i].title} - ${jobs[i].location} </li>`;
     }
     return { result: array, count: array.length };
   } 
@@ -200,15 +198,5 @@ const inputValues = function () {
     ".job_counter"
   ).innerText = `${oggetto.count} results found`);
 };
-
-
-
-//Funzione che ricerca i valori nell'array jobs
-
-
-//contiamo il numero di valori trovati (count)
-
-
-
 const button = document.querySelector("button");
 button.addEventListener("click", inputValues);
