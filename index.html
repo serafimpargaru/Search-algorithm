@@ -3,18 +3,51 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <link rel="stylesheet" href="./style.css" />
+    <title>Job finder</title>
   </head>
   <body>
-    <input type="text" placeholder="Job" id="inputJob">
-    <input type="text" placeholder="Location" id="inputPlace">
-    
-    <button>Search</button>
+    <header>
+      <div class="logo">JoBs.com</div>
+      <div class="icons">
+        <ion-icon name="logo-facebook"></ion-icon>
+        <ion-icon name="logo-google"></ion-icon>
+        <ion-icon name="logo-apple"></ion-icon>
+      </div>
+    </header>
 
-    <div class="job_counter"></div>
+    <main>
+      <aside class="left shadow">
+        <nav>
+          <div>What job are you looking for?</div>
+          <div id="none">Enter the values below to search</div>
+          <input type="text" placeholder="Job" id="inputJob" class="shadow" />
+          <input
+            type="text"
+            placeholder="Location"
+            id="inputPlace"
+            class="shadow"
+          />
+          <button class="shadow">SEARCH</button>
+        </nav>
+      </aside>
 
-    <ul id="results_found"></ul>
+      <aside class="right shadow">
+        <div class="job_counter shadow"></div>
+        <ul id="results_found"></ul>
+      </aside>
+    </main>
 
+    <footer></footer>
+
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
     <script src="./index.js"></script>
   </body>
 </html>

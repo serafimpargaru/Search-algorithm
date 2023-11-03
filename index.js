@@ -145,10 +145,35 @@ const jobs = [
 ];
 
 //----------STESURA ALGORITMO----------
+const jobInput = document.querySelector("#inputJob");
+const placeInput = document.querySelector("#inputPlace");
+jobInput.value = ""; //risolve il problema dell'input che non si svuota quando si fa refresh pagina
+placeInput.value = ""; //risolve il problema dell'input che non si svuota quando si fa refresh pagina
+
+//funzione che preleva i valori dai due input
+const inputValues = function () {
+  const resultsObject = searchJob(jobInput.value, placeInput.value); //richiama la funzione searchJob
+  const resultsList = document.querySelector("#results_found");
+  resultsList.innerHTML = ""; //svuota la lista quando non ci sono input
+  
+  for (let i = 0; i < resultsObject.count; i++) {
+    resultsList.innerHTML += `<li> ${resultsObject.result[i].title} - ${resultsObject.result[i].location} </li>`;
+  }
+  
+  //mostra il numero di valori trovati
+  const jobCounter = (document.querySelector(
+    ".job_counter"
+    ).innerText = `${resultsObject.count} results found`);
+  };
+
+  const button = document.querySelector("button");
+  button.addEventListener("click", inputValues);
+  
 //funzione per la ricerca
 const searchJob = function (titleEv, locationEv) {
   const array = [];
-  //console.log(titleEv + locationEv)
+  console.log(titleEv + locationEv);
+
   for (let i = 0; i < jobs.length; i++) {
     if (
       jobs[i].title.toLowerCase().includes(titleEv.toLowerCase()) &&
@@ -163,24 +188,3 @@ const searchJob = function (titleEv, locationEv) {
     count: array.length, //ritona la lunghezza dell'array (quanti elementi trovati)
   };
 };
-
-//funzione che preleva i valori dai due input
-const inputValues = function () {
-  const jobInput = document.querySelector("#inputJob").value;
-  const placeInput = document.querySelector("#inputPlace").value;
-  // console.log(jobInput + placeInput)
-
-  const resultsObject = searchJob(jobInput, placeInput);
-  const resultsList = document.querySelector("#results_found");
-  for (let i = 0; i < resultsObject.count; i++) {
-    resultsList.innerHTML += `<li> ${resultsObject.result[i].title} - ${resultsObject.result[i].location} </li>`;
-  }
-
-  //mostra il numero di valori trovati
-  const jobCounter = (document.querySelector(
-    ".job_counter"
-    ).innerText = `${resultsObject.count} results found`);
-  };
-  
-  const button = document.querySelector("button");
-  button.addEventListener("click", inputValues);
