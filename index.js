@@ -145,58 +145,42 @@ const jobs = [
 ];
 
 //----------STESURA ALGORITMO----------
-
-//Creo algoritmo che ricerca nel array sulla voce "title"
-// const list = document.querySelector("ul");
-
-// const searchJob = function (keyboardEv) {
-//   list.innerHTML = "";
-//   for (let i = 0; i < jobs.length; i++) {
-//     if (
-//       jobs[i].title
-//         .toLowerCase()
-//         .includes(keyboardEv.target.value.toLowerCase())
-//     ) {
-//       list.innerHTML += `<li> ${jobs[i].title} </li>`;
-//     }
-//   }
-//   if (keyboardEv.target.value.length === 0) {
-//     list.innerHTML = "";
-//   }
-// };
-
-// const inputJob = document.querySelector("#inputJob");
-// inputJob.addEventListener("keyup", searchJob);
-
-//--------------------------------------
-
-const searchJob = function (jobPosition, geoPlace) {
+//funzione per la ricerca
+const searchJob = function (titleEv, locationEv) {
   const array = [];
-  console.log(jobPosition + geoPlace)
+  //console.log(titleEv + locationEv)
   for (let i = 0; i < jobs.length; i++) {
     if (
-      jobs[i].title.toLowerCase().includes(jobPosition.toLowerCase()) &&
-      jobs[i].location.toLowerCase().includes(geoPlace.toLowerCase())
+      jobs[i].title.toLowerCase().includes(titleEv.toLowerCase()) &&
+      jobs[i].location.toLowerCase().includes(locationEv.toLowerCase())
     ) {
-      array.push(jobs[i]);
+      array.push(jobs[i]); //inserisco nell'array i valori jobs[i] trovati
     }
-    return { result: array, count: array.length };
-  } 
+  }
+  //ritorno l'oggetto contenente i due parametri interessati
+  return {
+    result: array, //risultati della ricerca (title e location)
+    count: array.length, //ritona la lunghezza dell'array (quanti elementi trovati)
+  };
 };
 
 //funzione che preleva i valori dai due input
 const inputValues = function () {
   const jobInput = document.querySelector("#inputJob").value;
   const placeInput = document.querySelector("#inputPlace").value;
-  //console.log(jobInput + placeInput)
-  const oggetto = searchJob(jobInput, placeInput);
+  // console.log(jobInput + placeInput)
+
+  const resultsObject = searchJob(jobInput, placeInput);
   const resultsList = document.querySelector("#results_found");
-  for(let i = 0; i < oggetto.count; i++) {
-  resultsList.innerHTML += `<li> ${oggetto.result[i].title} - ${oggetto.result[i].location} </li>`;
+  for (let i = 0; i < resultsObject.count; i++) {
+    resultsList.innerHTML += `<li> ${resultsObject.result[i].title} - ${resultsObject.result[i].location} </li>`;
   }
+
+  //mostra il numero di valori trovati
   const jobCounter = (document.querySelector(
     ".job_counter"
-  ).innerText = `${oggetto.count} results found`);
-};
-const button = document.querySelector("button");
-button.addEventListener("click", inputValues);
+    ).innerText = `${resultsObject.count} results found`);
+  };
+  
+  const button = document.querySelector("button");
+  button.addEventListener("click", inputValues);
