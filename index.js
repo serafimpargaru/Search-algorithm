@@ -38,24 +38,6 @@ Dopo aver raccolto ed elaborato i dati, e’ il momento di mostrare i risultati 
 
 */
 
-//------------------------------------------------------------------------------------------------------------------------------------------
-
-// //con questa funzione mostriamo in tempo reale (onchange) il value inserito nell'inputJob;
-// const jobPosition = function(ev) {
-//   const inputJob = document.querySelector("#inputJob")
-//   //console.log(ev.target.value)
-// }
-
-// const jobPlace = function() {
-//   const inputPlace = document.querySelector("#inputPlace")
-// }
-
-// //  const button = document.querySelector("#inputButton")
-// //  button.addEventListener("click", jobPosition)
-
-// // const button = document.querySelector("#inputButton")
-// // button.onclick = jobPosition
-
 // NON MODIFICARE QUESTO ARRAY!
 const jobs = [
   { title: "Marketing Intern", location: "US, NY, New York" },
@@ -149,30 +131,12 @@ const jobInput = document.querySelector("#inputJob");
 const placeInput = document.querySelector("#inputPlace");
 jobInput.value = ""; //risolve il problema dell'input che non si svuota quando si fa refresh pagina
 placeInput.value = ""; //risolve il problema dell'input che non si svuota quando si fa refresh pagina
+const resultsList = document.querySelector("#results_found");
 
-//funzione che preleva i valori dai due input
-const inputValues = function () {
-  const resultsObject = searchJob(jobInput.value, placeInput.value); //richiama la funzione searchJob
-  const resultsList = document.querySelector("#results_found");
-  resultsList.innerHTML = ""; //svuota la lista quando non ci sono input
-  
-  for (let i = 0; i < resultsObject.count; i++) {
-    resultsList.innerHTML += `<li> ${resultsObject.result[i].title} - ${resultsObject.result[i].location} </li>`;
-  }
-  
-  //mostra il numero di valori trovati
-  const jobCounter = (document.querySelector(
-    ".job_counter"
-    ).innerText = `${resultsObject.count} results found`);
-  };
-
-  const button = document.querySelector("button");
-  button.addEventListener("click", inputValues);
-  
 //funzione per la ricerca
 const searchJob = function (titleEv, locationEv) {
   const array = [];
-  console.log(titleEv + locationEv);
+  //console.log(titleEv + locationEv);
 
   for (let i = 0; i < jobs.length; i++) {
     if (
@@ -182,9 +146,31 @@ const searchJob = function (titleEv, locationEv) {
       array.push(jobs[i]); //inserisco nell'array i valori jobs[i] trovati
     }
   }
+
   //ritorno l'oggetto contenente i due parametri interessati
   return {
     result: array, //risultati della ricerca (title e location)
     count: array.length, //ritona la lunghezza dell'array (quanti elementi trovati)
   };
 };
+
+//funzione che preleva i valori dai due input se la condizione è soddisfatta
+const inputValues = function () {
+  const jobCounter = document.querySelector(".job_counter");
+  if(!jobInput.value || !placeInput.value) {
+    alert("Please complete Job or Location for a better search")
+  } else {
+    const resultsObject = searchJob(jobInput.value, placeInput.value); //richiama la funzione searchJob
+    resultsList.innerHTML = ""; //svuota la lista quando non ci sono input
+  
+    for (let i = 0; i < resultsObject.count; i++) {
+      resultsList.innerHTML += `<li> ${resultsObject.result[i].title} - ${resultsObject.result[i].location} </li>`;
+    }
+  
+    //mostra il numero di valori trovati all'interno del div
+    jobCounter.innerText = `${resultsObject.count} results found`;
+  }
+};
+
+const button = document.querySelector("button");
+button.addEventListener("click", inputValues);
